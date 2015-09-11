@@ -30,3 +30,6 @@ dist
 *.swp
 *~
 .sass-cache
+
+# ignore the publish folder that gh-pages-publish uses
+.publish/

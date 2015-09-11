@@ -13,68 +13,62 @@
     <body>
         <div class="reveal">
             <div class="slides">
-                <section data-markdown>
-                    <h1>Some nerdy javascript stuff</h1>
-                    <p>ES2015 And Beyond</p>
-                    <img src="resources/es_logo.svg" style="width:50%"/>
+                <section data-markdown="intro.md" data-separator="^<--->" data-separator-vertical="^---"></section>
+                <section>
+                    <h2>You can Also Specify your presentation in Html</h2>
                 </section>
                 <section>
-                    <ul>What is ES2015/ES6?
-                        <li>Next version of javascript</li>
-                    </ul>
+                    <h2>Each horizontal section is a new section tag</h2>
                 </section>
+                <section>
+                    <h2>You can nest sections for vertical pages</h2>
+                    <section>
+                        <p>Like this</p>
+                    </section>
+                    <section>
+                        <p>And This</p>
+                    </section>
+                </section>
+                <section>
+                    <h2>Code Snippets</h2>
+                    <p>In Multiple Languages</p>
+                    <section>
+                        <h3>C#</h3>
+                        <pre><code class="lang-cs">
+public class CodeSnippets{
+    public void AreTotallyAThing(){
 
-                <section>
-                    <section>
-                        <p>How do we get started?</p>
+    }
+}                        
+                        </code></pre>
                     </section>
                     <section>
-                        <p>In browsers</p>
-                    </section>
-                    <section>
-                        <p>In node 0.x, io.js < 3.x</p>
-                    </section>
-                    <section>
-                        <p>In Node 4.0</p>
-                    </section>
-                </section>
+                        <h3>javascript</h3>
+                        <pre><code class="lang-js">
+function foo(){
+    return function bar(){
 
-                <section>
-                    <h2>Features</h2>
+    }
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>html</h3>
+                        <pre><code class="lang-html">
+<pre><code class="lang-html">
+    <p>the inception!</p>
+</code></pre>
+                        </code></pre>
+                    </section>
                 </section>
-                <section>
-                    <h2>New scoping</h2>
-                    <p>(Let/Var)</p>
-                </section>
-                <section>
-                    <h2>Fat Arrow</h2>
-                </section>
-                <section>
-                    <h2>Promises</h2>
-                </section>
-                <section>
-                    <h2>Rest/Spread/Destructuring</h2>
-                </section>
-                <section>
-                    <h2>Classes</h2>
-                </section>
-                <section>
-                    <h2>Modules</h2>
-                </section>
-                <section>
-                    <h2>Iterators/generators</h2>
-                </section>
-                <section>
-                    <h2>Symbols</h2>
-                </section>
-                <section>
-                    <h2>Maps and Sets</h2>
-                </section>
-                <section>
-                    <h2>Tail Calls</h2>
-                </section>
-                <section>
-                    <h3>Resources</h3>
+                <section data-markdown data-separator="^<--->" data-separator-vertical="^---">
+                    ## Inline Markdown is okay too
+                    <--->
+                    ```
+                    function markdownCodeSnippets(){
+                        return 'also exist';
+                    }
+                    ```
                 </section>
             </div>
         </div>
@@ -82,14 +76,16 @@
         <!-- endbower -->
         <!-- inject:js -->
         <!-- endinject -->
-
         <script>
+        document.addEventListener("DOMContentLoaded", function(event) { 
             Reveal.initialize({
-            transition: 'concave',
-            progress: true,
-            history: true
+                transition: 'concave',
+                progress: true,
+                history: true
             });
             hljs.initHighlightingOnLoad();
+        });
+                            
         </script>
     </body>
 </html>

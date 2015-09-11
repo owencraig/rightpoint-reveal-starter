@@ -68,4 +68,17 @@ section.has-light-background {
 		color: $yellow;
 		font-size: 1.1em; 
 	}
+	li {
+		font-size: 24px;
+	}
+	.pull-left {
+		float: left;
+	}
+	.custom-pre {
+		width: 50%;
+	}
+	.custom-list {
+		width: 46%;
+		padding-top: 14px;
+	}
 }

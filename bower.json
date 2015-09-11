@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "homepage": "https://github.com/jorupp/angular-intro",
   "authors": [
-    "Owen Craig <ocraig@rightpoint.com>",
+    "Owen Craig <owen@owencraig.com>",
     "Aaron Starkston <astarkston@rightpoint.com>"
   ],
   "license": "MIT",
@@ -25,7 +25,11 @@
         "lib/js/head.min.js",
         "js/reveal.js",
         "plugin/highlight/highlight.js",
-        "plugin/zoom-js/zoom.js"
+        "plugin/zoom-js/zoom.js",
+        "plugin/notes/notes.js",
+        "plugin/markdown/marked.js",
+        "plugin/markdown/markdown.js"
+
       ]
     }
   }

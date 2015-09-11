@@ -1,5 +1,5 @@
-var Stream = require('stream')
-var PassThrough = Stream.PassThrough
+var Stream = require('stream');
+var PassThrough = Stream.PassThrough;
 var fs = require('fs');
 var gulp = require('gulp');
 var wiredep = require('wiredep');
@@ -12,11 +12,13 @@ var open = require('open');
 var serveStatic = require('serve-static');
 var inject = require('gulp-inject');
 var gp = require('gulp-plumber');
+var ghPages = require('gulp-gh-pages');
+
 var plumber = function() {
     return gp({ errorHandler: function(err) {
         console.log(err);
         this.emit('end');
-    }})
+    }});
 };
 var debug = require('gulp-debug');
 var proxy = require('proxy-middleware');
@@ -32,7 +34,8 @@ var sass = require('gulp-ruby-sass');
 var RESOURCE_SOURCE = 'src/resources/**';
 var JS_SCRIPT_SOURCE = 'src/**/*.js';
 var STYLE_SOURCE = 'src/sass/**/*.scss';
-var INDEX_SOURCE = 'src/index.html';
+var INDEX_SOURCE = ['src/index.html', 'src/**/*.md'];
+
 var PORT = 5678;
 
 // clean/prep dist directory when starting
@@ -51,12 +54,12 @@ function merge(args) {
     
     var result = PassThrough({ objectMode: true, highWaterMark: 16 });
     function processNext() {
-        if (args.length == 0) {
+        if (args.length === 0) {
             return result.end();
         }
         var arg = args.shift();
         arg.on('end', processNext);
-        arg.pipe(result, {end: false})
+        arg.pipe(result, {end: false});
     }
     
     processNext();
@@ -66,7 +69,7 @@ function merge(args) {
 
 
 function scripts() {
-    gulp.src(JS_SCRIPT_SOURCE)
+    return gulp.src(JS_SCRIPT_SOURCE)
         .pipe(plumber())
         .pipe(changed('dist/scripts'));
 }
@@ -77,11 +80,9 @@ gulp.task('resources', [], function() {
 });
 gulp.task('scripts', [], function() {
     var r = scripts();
-    return
-        r
+    return r
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('dist/scripts'))
-    ;
+            .pipe(gulp.dest('dist/scripts'));
 });
 gulp.task('scripts-release', [], function() {
     var r = scripts();
@@ -110,11 +111,12 @@ gulp.task('styles', [], function () {
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/styles'));
 });
+
 gulp.task('styles-release', [], function () {
     return merge([
-            styles(),
             gulp.src(wiredep().css)
-                .pipe(plumber())
+                .pipe(plumber()),
+            styles()
         ])
         .pipe(concat('styles.css'))
         .pipe(minifyCss())
@@ -134,7 +136,7 @@ gulp.task('index', ['scripts', 'styles', 'resources'], function() {
 gulp.task('index-release', ['scripts-release', 'styles-release', 'resources'], function() {
     return gulp.src(INDEX_SOURCE)
         .pipe(plumber())
-        .pipe(inject(gulp.src(['dist/scripts/**/scripts-*.js', 'dist/styles/**/styles-*.css'], { read: false}), { ignorePath: 'dist' }))
+        .pipe(inject(gulp.src(['dist/scripts/**/*.js', 'dist/styles/**/styles-*.css'], { read: false}), { relative: true, ignorePath: '../dist/' }))
         .pipe(gulp.dest('./dist'));
 });
 
@@ -175,7 +177,7 @@ gulp.task('open-release', ['server-release'], function() {
 
 gulp.task('reload', [], function() {
     // not working, don't know why
-    return gulp.src('dist/index.html').pipe(connect.reload())
+    return gulp.src('dist/index.html').pipe(connect.reload());
 });
 
 gulp.task('watch', ['scripts'], function() {
@@ -193,4 +195,9 @@ gulp.task('default', function(callback) {
 });
 gulp.task('release', function(callback) {
     return runSequence('clean', 'open-release', callback);
+});
+
+gulp.task('deploy', ['index-release'], function(){
+    return gulp.src('./dist/**/*')
+    .pipe(ghPages());
 });
