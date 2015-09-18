@@ -85,7 +85,9 @@ function foo(){
         <script src="scripts/zoom.js"></script>
         <!-- endinject -->
         <script>
+        console.log(new Date());
         document.addEventListener("DOMContentLoaded", function(event) { 
+            console.log(new Date());
             Reveal.initialize({
                 transition: 'concave',
                 progress: true,
