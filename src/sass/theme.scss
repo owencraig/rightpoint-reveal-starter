@@ -54,6 +54,11 @@ section.has-light-background {
 // ---------------------------------------------
 
 .reveal {
+	&.concave {
+		&.center{
+			background-color: $white;
+		}
+	}
 	.slides section {
 		.fragment.current-visible {
 			height: 0;
