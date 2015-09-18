@@ -77,7 +77,9 @@ function foo(){
         <!-- inject:js -->
         <!-- endinject -->
         <script>
+        console.log(new Date(), (new Date()).getMilliseconds());
         document.addEventListener("DOMContentLoaded", function(event) { 
+            console.log(new Date(), (new Date()).getMilliseconds());
             Reveal.initialize({
                 transition: 'concave',
                 progress: true,

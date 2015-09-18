@@ -39,10 +39,15 @@ var INDEX_SOURCE = ['src/index.html', 'src/**/*.md'];
 var PORT = 5678;
 
 // clean/prep dist directory when starting
-console.log('removing dist directory....');
+console.log('removing dist directories....');
 if (fs.existsSync('dist')) {
     rimraf.sync('dist');
 }
+
+if (fs.existsSync('.publish')) {
+    rimraf.sync('.publish');
+}
+
 fs.mkdirSync('dist');
 
 // serial merge call that actually works - merge2 drops data, and es.merge is parallel
@@ -86,6 +91,7 @@ gulp.task('scripts', [], function() {
 });
 gulp.task('scripts-release', [], function() {
     var r = scripts();
+    console.log(wiredep().js);
     return merge([
         merge([
             gulp.src(wiredep().js)
@@ -93,10 +99,10 @@ gulp.task('scripts-release', [], function() {
                 .pipe(sourcemaps.init()),
             r,
         ])
-            .pipe(concat('scripts.js'))
-            .pipe(uglify())
-            .pipe(rev())
-            .pipe(sourcemaps.write('.'))
+            .pipe(concat('scripts.js', {newLine: ';'}))
+            //.pipe(uglify())
+            //.pipe(rev())
+            //.pipe(sourcemaps.write('.'))
             .pipe(gulp.dest('dist/scripts'))
     ]);
 });
