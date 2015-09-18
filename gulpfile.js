@@ -91,7 +91,6 @@ gulp.task('scripts', [], function() {
 });
 gulp.task('scripts-release', [], function() {
     var r = scripts();
-    console.log(wiredep().js);
     return merge([
         merge([
             gulp.src(wiredep().js)
@@ -100,9 +99,9 @@ gulp.task('scripts-release', [], function() {
             r,
         ])
             .pipe(concat('scripts.js', {newLine: ';'}))
-            //.pipe(uglify())
-            //.pipe(rev())
-            //.pipe(sourcemaps.write('.'))
+            .pipe(uglify())
+            .pipe(rev())
+            .pipe(sourcemaps.write('.'))
             .pipe(gulp.dest('dist/scripts'))
     ]);
 });
